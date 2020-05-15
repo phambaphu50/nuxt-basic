@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   mode: "universal",
   /*
@@ -14,7 +15,23 @@ module.exports = {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      }
+    ],
+    script: [
+      {
+        src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+      },
+      {
+        src:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -27,11 +44,12 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/element-ui"],
+  plugins: [
+    "@/plugins/element-ui"],
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [ '@nuxtjs/style-resources',],
+  buildModules: ["@nuxtjs/style-resources"],
   styleResources: {
     scss: ["./assets/css/main.scss"]
   },
@@ -47,6 +65,13 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
+    plugins: [
+      new webpack.ProvidePlugin({
+        jQuery: "jquery",
+        $: "jquery",
+        "window.jQuery": "jquery"
+      })
+    ]
   }
 };
